@@ -5,13 +5,10 @@ lazy val root = (project in file(".")).
       organization := "geotrellis",
       scalaVersion := "2.11.8"
     )),
-    name := "geotrellis-spark-batch"
+    name := "geotrellis-spark-batch",
     libraryDependencies ++= Seq(
       "org.locationtech.geotrellis" %% "geotrellis-spark" % "2.1.0",
       "org.locationtech.geotrellis" %% "geotrellis-s3" % "2.1.0",
-      "org.locationtech.geotrellis" %% "geotrellis-accumulo" % "2.1.0",
-      "org.locationtech.geotrellis" %% "geotrellis-hbase" % "2.1.0",
-      "org.locationtech.geotrellis" %% "geotrellis-cassandra" % "2.1.0",
       "com.monovore" %% "decline" % "0.5.0",
       "org.apache.spark" %% "spark-core" % "2.3.0" % "provided"
     ),
