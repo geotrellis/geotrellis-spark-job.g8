@@ -10,7 +10,7 @@ lazy val root = (project in file(".")).
       "org.locationtech.geotrellis" %% "geotrellis-spark" % "2.1.0",
       "org.locationtech.geotrellis" %% "geotrellis-s3" % "2.1.0",
       "com.monovore" %% "decline" % "0.5.0",
-      "org.apache.spark" %% "spark-core" % "2.3.0" % "provided"
+      "org.apache.spark" %% "spark-core" % "2.3.2" % "compile"
     ),
     resolvers ++= Seq(
       "LocationTech Snapshots" at "https://repo.locationtech.org/content/groups/snapshots",
