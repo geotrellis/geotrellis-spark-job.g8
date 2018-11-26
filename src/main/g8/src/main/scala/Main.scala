@@ -38,7 +38,7 @@ object Main extends CommandApp(
       implicit val sc = new SparkContext(conf)
 
       try {
-        val tileLayer: MultibandTileLayerRDD[SpatialKey] = Process(inputs.toList, zoom, numPartitions)
+        val tileLayer: MultibandTileLayerRDD[SpatialKey] = ProcessInputs(inputs.toList, zoom, numPartitions)
         val layerWriter: LayerWriter[LayerId] = LayerWriter(output)
         val pyramid: Stream[(Int, MultibandTileLayerRDD[SpatialKey])] =
           Pyramid.levelStream(tileLayer, ZoomedLayoutScheme(WebMercator), zoom)

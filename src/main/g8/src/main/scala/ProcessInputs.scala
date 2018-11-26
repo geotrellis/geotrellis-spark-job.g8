@@ -11,7 +11,7 @@ import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD
 
 
-object Process {
+object ProcessInputs {
   def apply(
     paths: Seq[String],
     targetZoom: Int,
