@@ -1,6 +1,8 @@
 package geotrellis.batch
 
 import geotrellis.raster._
+import geotrellis.raster.histogram.Histogram
+import geotrellis.raster.io._
 import geotrellis.spark._
 import geotrellis.spark.pyramid.Pyramid
 import geotrellis.spark.tiling.ZoomedLayoutScheme
@@ -39,13 +41,23 @@ object Main extends CommandApp(
 
       try {
         val tileLayer: MultibandTileLayerRDD[SpatialKey] = ProcessInputs(inputs.toList, zoom, numPartitions)
-        val layerWriter: LayerWriter[LayerId] = LayerWriter(output)
+
+        val histograms: Array[Histogram[Double]] = tileLayer.histogram
         val pyramid: Stream[(Int, MultibandTileLayerRDD[SpatialKey])] =
           Pyramid.levelStream(tileLayer, ZoomedLayoutScheme(WebMercator), zoom)
+
+        val layerWriter: LayerWriter[LayerId] = LayerWriter(output)
+
+        histograms.zipWithIndex.foreach { case (hist, index) =>
+          layerWriter
+            .attributeStore
+            .write[Histogram[Double]](LayerId(name, zoom), s"band-$index-histogram", hist)
+        }
 
         pyramid.map { case (z, layer) =>
           layerWriter.write(LayerId(name, z), layer, ZCurveKeyIndexMethod)
         }
+
       } catch {
         case e: Exception => throw e
       } finally {
