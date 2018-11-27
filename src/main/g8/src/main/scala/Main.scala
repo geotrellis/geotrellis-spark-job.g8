@@ -42,9 +42,11 @@ object Main extends CommandApp(
       try {
         val tileLayer: MultibandTileLayerRDD[SpatialKey] = ProcessInputs(inputs.toList, zoom, numPartitions)
 
+        tileLayer.persist()
+
         val histograms: Array[Histogram[Double]] = tileLayer.histogram
         val pyramid: Stream[(Int, MultibandTileLayerRDD[SpatialKey])] =
-          Pyramid.levelStream(tileLayer, ZoomedLayoutScheme(WebMercator), zoom)
+          Pyramid.levelStream(tileLayer, ZoomedLayoutScheme(WebMercator), startZoom = zoom, endZoom = 0)
 
         val layerWriter: LayerWriter[LayerId] = LayerWriter(output)
 
@@ -54,9 +56,11 @@ object Main extends CommandApp(
             .write[Histogram[Double]](LayerId(name, zoom), s"band-$index-histogram", hist)
         }
 
-        pyramid.map { case (z, layer) =>
+        pyramid.foreach { case (z, layer) =>
           layerWriter.write(LayerId(name, z), layer, ZCurveKeyIndexMethod)
         }
+
+        tileLayer.unpersist()
 
       } catch {
         case e: Exception => throw e
