@@ -44,17 +44,25 @@ object Main extends CommandApp(
 
         tileLayer.persist()
 
-        val histograms: Array[Histogram[Double]] = tileLayer.histogram
         val pyramid: Stream[(Int, MultibandTileLayerRDD[SpatialKey])] =
           Pyramid.levelStream(tileLayer, ZoomedLayoutScheme(WebMercator), startZoom = zoom, endZoom = 0)
 
         val layerWriter: LayerWriter[LayerId] = LayerWriter(output)
 
+        // TODO: Save a histogram for each band.
+        // Currently, giter8 has problems creatings templates that
+        // have string interpolation in its code.
+        // See this issue for more info: https://github.com/foundweekends/giter8/issues/333
+
+        /*
+        val histograms: Array[Histogram[Double]] = tileLayer.histogram
+
         histograms.zipWithIndex.foreach { case (hist, index) =>
           layerWriter
             .attributeStore
-            .write[Histogram[Double]](LayerId(name, zoom), s"band-$index-histogram", hist)
+            .write[Histogram[Double]](LayerId(name, zoom), s"band\_\${index}\_histogram", hist)
         }
+        */
 
         pyramid.foreach { case (z, layer) =>
           layerWriter.write(LayerId(name, z), layer, ZCurveKeyIndexMethod)
