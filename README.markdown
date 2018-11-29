@@ -19,8 +19,10 @@ Along with the above requirements, the environment variable, `SPARK_HOME`, must 
 
 To setup the template, run the following command:
 
-```
+```sh
 g8 geotrellis/geotrellis-spark-batch.g8
+# or
+sbt new geotrellis/geotrellis-spark-batch.g8
 ```
 
 Once the command is run, a series of prompts regarding the new
