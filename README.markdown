@@ -1,4 +1,4 @@
-# geotrellis-spark-batch.g8
+# geotrellis-spark-job.g8
 
 This is a Giter8 template for performing ingests using
 [GeoTrellis](https://github.com/locationtech/geotrellis). In addition
@@ -20,9 +20,9 @@ Along with the above requirements, the environment variable, `SPARK_HOME`, must 
 To setup the template, run the following command:
 
 ```sh
-g8 geotrellis/geotrellis-spark-batch.g8
+g8 geotrellis/geotrellis-spark-job.g8
 # or
-sbt new geotrellis/geotrellis-spark-batch.g8
+sbt new geotrellis/geotrellis-spark-job.g8
 ```
 
 Once the command is run, a series of prompts regarding the new
@@ -52,7 +52,7 @@ ingest.
 An example command would look like:
 
 ```
-sbt:geotrellis-spark-batch> run --inputPath /tmp/cropped.tif --name test-layer --outputPath file:///tmp/test-catalog
+sbt:geotrellis-spark-job> run --inputPath /tmp/cropped.tif --name test-layer --outputPath file:///tmp/test-catalog
 ```
 
 ### Caveats

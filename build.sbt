@@ -4,7 +4,7 @@
 lazy val root = (project in file("."))
   .enablePlugins(ScriptedPlugin)
   .settings(
-    name := "geotrellis-spark-batch",
+    name := "geotrellis-spark-job",
     test in Test := {
       val _ = (g8Test in Test).toTask("").value
     },
