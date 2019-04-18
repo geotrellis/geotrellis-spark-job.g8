@@ -1,21 +1,18 @@
-// give the user a nice default project!
-lazy val root = (project in file(".")).
-  settings(
-    inThisBuild(List(
-      organization := "geotrellis",
-      scalaVersion := "2.11.8"
-    )),
-    name := "geotrellis-spark-batch",
-    libraryDependencies ++= Seq(
-      "org.locationtech.geotrellis" %% "geotrellis-spark" % "2.1.0",
-      "org.locationtech.geotrellis" %% "geotrellis-s3" % "2.1.0",
-      "com.monovore" %% "decline" % "0.5.0",
-      "org.apache.spark" %% "spark-core" % "2.3.2" % "compile"
-    ),
-    resolvers ++= Seq(
-      "LocationTech Snapshots" at "https://repo.locationtech.org/content/groups/snapshots",
-      "LocationTech Releases" at "https://repo.locationtech.org/content/groups/releases",
-      DefaultMavenRepository,
-      Resolver.url("typesafe", url("http://repo.typesafe.com/typesafe/ivy-releases/"))(Resolver.ivyStylePatterns)
-    )
-  )
+name := "$name$"
+organization := "$organization$"
+version := "0.1.0"
+
+scalaVersion := "$scala_version$"
+
+libraryDependencies ++= Seq(
+  "com.monovore" %% "decline" % "0.6.2",
+  "org.locationtech.geotrellis" %% "geotrellis-spark" % "$geotrellis_version$",
+  "org.locationtech.geotrellis" %% "geotrellis-s3" % "$geotrellis_version$",
+  "org.apache.spark" %% "spark-core" % "$spark_version$" % Provided
+)
+
+resolvers ++= Seq(
+  "LocationTech Snapshots" at "https://repo.locationtech.org/content/groups/snapshots",
+  "LocationTech Releases" at "https://repo.locationtech.org/content/groups/releases",
+  Resolver.url("typesafe", url("http://repo.typesafe.com/typesafe/ivy-releases/"))(Resolver.ivyStylePatterns)
+)
