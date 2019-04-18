@@ -8,6 +8,8 @@ libraryDependencies ++= Seq(
   "com.monovore" %% "decline" % "0.6.2",
   "org.locationtech.geotrellis" %% "geotrellis-spark" % "$geotrellis_version$",
   "org.locationtech.geotrellis" %% "geotrellis-s3" % "$geotrellis_version$",
+  "com.azavea.geotrellis" %% "geotrellis-contrib-vlm" % "$geotrellis_contrib_version$",
+  "com.azavea.geotrellis" %% "geotrellis-contrib-gdal" % "$geotrellis_contrib_version$",
   "org.apache.spark" %% "spark-core" % "$spark_version$" % Provided
 )
 
