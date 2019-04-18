@@ -14,8 +14,8 @@ import geotrellis.proj4.WebMercator
 import cats.implicits._
 import com.monovore.decline._
 
-import org.apache.spark.{SparkConf, SparkContext}
-import org.apache.spark.serializer.KryoSerializer
+import org.apache.spark._
+import org.apache.spark.rdd._
 
 
 object Main extends CommandApp(
@@ -29,15 +29,15 @@ object Main extends CommandApp(
     val outputOpt = Opts.option[String]("outputPath", help = "The path of the output catlaog")
 
     (inputsOpt, nameOpt, zoomOpt, numPartitionsOpt, outputOpt).mapN { (inputs, name, zoom, numPartitions, output) =>
+      val conf = new SparkConf()
+        .setIfMissing("spark.master", "local[*]")
+        .setAppName("GeoTrellis Batch Job")
+        .set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
+        .set("spark.kryo.registrator", "geotrellis.spark.io.kryo.KryoRegistrator")
+        .set("spark.executionEnv.AWS_PROFILE", Properties.envOrElse("AWS_PROFILE", "default"))
 
-      val conf =
-        new SparkConf()
-          .setIfMissing("spark.master", "local[*]")
-          .setAppName("GeoTrellis Spark Batch Job")
-          .set("spark.serializer", classOf[KryoSerializer].getName)
-          .set("spark.kryo.registrator", classOf[KryoRegistrator].getName)
-
-      implicit val sc = new SparkContext(conf)
+      implicit val ss: SparkSession = SparkSession.builder.config(conf).enableHiveSupport.getOrCreate
+      implicit val sc: SparkContext = ss.sparkContext
 
       try {
         val tileLayer: MultibandTileLayerRDD[SpatialKey] = ProcessInputs(inputs.toList, zoom, numPartitions)
