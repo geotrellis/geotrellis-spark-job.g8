@@ -37,7 +37,7 @@ object Main extends CommandApp(
         .set("spark.executionEnv.AWS_PROFILE", Properties.envOrElse("AWS_PROFILE", "default"))
 
       implicit val spark = SparkSession.builder.config(conf).enableHiveSupport.getOrCreate
-      implicit val sc = ss.sparkContext
+      implicit val sc = spark.sparkContext
 
       // Job logic ...
 
