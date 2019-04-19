@@ -18,6 +18,7 @@ import org.apache.spark._
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.rdd._
 
+import scala.util.Properties
 
 object Main extends CommandApp(
   name = "$name$",
