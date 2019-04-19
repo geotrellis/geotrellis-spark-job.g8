@@ -15,6 +15,7 @@ import cats.implicits._
 import com.monovore.decline._
 
 import org.apache.spark._
+import org.apache.spark.sql.SparkSession
 import org.apache.spark.rdd._
 
 
