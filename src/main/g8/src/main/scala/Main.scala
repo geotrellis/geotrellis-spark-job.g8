@@ -19,7 +19,7 @@ import org.apache.spark.rdd._
 
 
 object Main extends CommandApp(
-  name = "spark-batch-job",
+  name = "$name$",
   header = "Creates a Spark batch job",
   main = {
     val inputsOpt = Opts.options[String]("inputPath", help = "The path that points to data that will be read")
