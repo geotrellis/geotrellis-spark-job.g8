@@ -16,7 +16,8 @@ libraryDependencies ++= Seq(
 resolvers ++= Seq(
   "LocationTech Snapshots" at "https://repo.locationtech.org/content/groups/snapshots",
   "LocationTech Releases" at "https://repo.locationtech.org/content/groups/releases",
-  Resolver.url("typesafe", url("http://repo.typesafe.com/typesafe/ivy-releases/"))(Resolver.ivyStylePatterns)
+  Resolver.url("typesafe", url("http://repo.typesafe.com/typesafe/ivy-releases/"))(Resolver.ivyStylePatterns),
+  Resolver.bintrayRepo("azavea", "geotrellis")
 )
 
 // Settings for sbt-assembly plugin which builds fat jars for spark-submit
