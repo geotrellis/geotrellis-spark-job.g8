@@ -11,7 +11,8 @@ libraryDependencies ++= Seq(
   "com.azavea.geotrellis" %% "geotrellis-contrib-vlm" % "$geotrellis_contrib_version$",
   "com.azavea.geotrellis" %% "geotrellis-contrib-gdal" % "$geotrellis_contrib_version$",
   "org.apache.spark" %% "spark-core" % "$spark_version$" % Provided,
-  "org.apache.spark" %% "spark-sql" % "$spark_version$" % Provided
+  "org.apache.spark" %% "spark-sql" % "$spark_version$" % Provided,
+  "org.apache.spark" %% "spark-hive" % "$spark_version$" % Provided
 )
 
 resolvers ++= Seq(
