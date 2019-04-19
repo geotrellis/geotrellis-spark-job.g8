@@ -22,6 +22,10 @@ resolvers ++= Seq(
   Resolver.bintrayRepo("azavea", "geotrellis")
 )
 
+// Fork JVM for test context to avoid memory leaks in Metaspace
+Test / fork := true
+Test / outputStrategy := Some(StdoutOutput)
+
 // Settings for sbt-assembly plugin which builds fat jars for spark-submit
 assemblyMergeStrategy in assembly := {
   case "reference.conf"   => MergeStrategy.concat
