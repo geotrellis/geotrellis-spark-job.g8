@@ -9,7 +9,7 @@ a reference for how to perform such operations in GeoTrellis.
 
 | Requirement | Version |
 |:-----------:|:-------:|
-|    Spark    |  >=2.0  |
+|    Spark    |  >=2.4  |
 |    Scala    |   2.11  |
 
 
@@ -40,26 +40,14 @@ sbt
 Then type, `run` followed by the parameters listed bellow to perform the
 ingest.
 
-|     Command     |                                                        Description                                                       |
-|:---------------:|:------------------------------------------------------------------------------------------------------------------------:|
-|   --inputPath   | The path to the target GeoTiff to be read. This option can be set multiple times when trying to read more than one file. |
-|      --name     |                                             The name of the resulting layer.                                             |
-|      --zoom     |                       Optional, the max zoom level the resulting layer should have. Default is, 13.                      |
-| --numPartitions |          Optional, the number of partitions to use during the ingest. Default is the number of available cores.          |
-|   --outputPath  |                       The path which the ingest layer should be saved to. Must be in a URI format.                       |
-
+|     Command     | Description                                                       |
+|:---------------:|:-----------------------------------------------------------------:|
+| --outputPath    | URI of input file                                                  |
+| --inputPath     | URI of output file                                                 |
+| --numPartitions | Optional, the number of partitions to use during the ingest.      |
 
 An example command would look like:
 
 ```
-sbt:geotrellis-spark-job> run --inputPath /tmp/cropped.tif --name test-layer --outputPath file:///tmp/test-catalog
+sbt:geotrellis-spark-job> run --inputPath /tmp/cropped.tif --outputPath file:///tmp/test-catalog
 ```
-
-### Caveats
-
-**Note:** This template is in its early stages of development and thus
-is not yet feature complete.
-
-As of now, this template is only able to ingest spatial data to
-ZoomedLayout in the WebMercator projection. Support for more
-operations/control during the ingest will added at a later date.
