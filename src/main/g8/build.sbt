@@ -22,6 +22,20 @@ resolvers ++= Seq(
   Resolver.bintrayRepo("azavea", "geotrellis")
 )
 
+initialCommands in console :=
+"""
+import java.net._
+import geotrellis.raster._
+import geotrellis.vector._
+import geotrellis.vector.io._
+import geotrellis.spark._
+import geotrellis.spark.tiling._
+import geotrellis.contrib.vlm._
+import geotrellis.contrib.vlm.geotiff._
+import geotrellis.contrib.vlm.gdal._
+import geotrellis.contrib.vlm.avro._
+""".stripMargin
+
 // Fork JVM for test context to avoid memory leaks in Metaspace
 Test / fork := true
 Test / outputStrategy := Some(StdoutOutput)
