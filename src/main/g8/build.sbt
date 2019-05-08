@@ -79,9 +79,12 @@ sparkEmrBootstrap := List(
   BootstrapAction("Install GDAL + dependencies",
                   "s3://geotrellis-test/usbuildings/bootstrap.sh",
                   "s3://geotrellis-test/usbuildings",
-                  "v1.0"))
+                  "v1.0")
+)
 sparkEmrServiceRole := "EMR_DefaultRole"
 sparkInstanceRole := "EMR_EC2_DefaultRole"
+sparkMasterEbsSize := Some(64)
+sparkCoreEbsSize := Some(64)
 sparkEmrConfigs := List(
   EmrConfig("spark").withProperties(
     "maximizeResourceAllocation" -> "true"
@@ -92,8 +95,7 @@ sparkEmrConfigs := List(
     "spark.shuffle.service.enabled" -> "true",
     "spark.rdd.compress" -> "true",
     "spark.driver.extraJavaOptions" -> "-Djava.library.path=/usr/local/lib",
-    "spark.executor.extraJavaOptions" -> "-Djava.library.path=/usr/local/lib -XX:+UseParallelGC",
-    "spark.executorEnv.LD_LIBRARY_PATH" -> "/usr/local/lib"
+    "spark.executor.extraJavaOptions" -> "-XX:+UseParallelGC"
   ),
   EmrConfig("spark-env").withProperties(
     "LD_LIBRARY_PATH" -> "/usr/local/lib"
