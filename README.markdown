@@ -54,8 +54,6 @@ sbt:geotrellis-spark-job> run --inputPath /tmp/cropped.tif --outputPath file:///
 
 ## EMR Configuration
 
-By default, sbt-lighter plugin allocates only a 32Gb EBS volume, and as a consequence you may experience issues with Spark jobs completion. Consider allocating larger EBS volumes in such cases using the following configurations. These should be placed into a build.sbt file. The other option would be to use a different instance type that doesn't require EBS volumes usage.
-
 This project uses [sbt-lighter plugin](https://github.com/pishen/sbt-lighter) to simplify EMR cluster configuration and Spark jobs deployment. It's important to remember, that some of the Amazon instances are EBS only instances, so check out [instances types description](https://aws.amazon.com/ru/ec2/instance-types/) carefully. By default, [sbt-lighter plugin](https://github.com/pishen/sbt-lighter) allocates only a 32Gb EBS volume, and as a consequence you may experience issues with Spark jobs completion. Consider allocating larger EBS volumes in such cases using the following configurations: 
 
 ```scala
