@@ -8,32 +8,24 @@ libraryDependencies ++= Seq(
   "com.monovore" %% "decline" % "0.6.2",
   "org.locationtech.geotrellis" %% "geotrellis-spark" % "$geotrellis_version$",
   "org.locationtech.geotrellis" %% "geotrellis-s3" % "$geotrellis_version$",
-  "com.azavea.geotrellis" %% "geotrellis-contrib-vlm" % "$geotrellis_contrib_version$",
-  "com.azavea.geotrellis" %% "geotrellis-contrib-gdal" % "$geotrellis_contrib_version$",
+  "org.locationtech.geotrellis" %% "geotrellis-gdal" % "$geotrellis_version$",
   "org.apache.spark" %% "spark-core" % "$spark_version$" % Provided,
   "org.apache.spark" %% "spark-sql" % "$spark_version$" % Provided,
   "org.apache.spark" %% "spark-hive" % "$spark_version$" % Provided
 )
 
 resolvers ++= Seq(
-  "LocationTech Snapshots" at "https://repo.locationtech.org/content/groups/snapshots",
-  "LocationTech Releases" at "https://repo.locationtech.org/content/groups/releases",
-  Resolver.url("typesafe", url("http://repo.typesafe.com/typesafe/ivy-releases/"))(Resolver.ivyStylePatterns),
-  Resolver.bintrayRepo("azavea", "geotrellis")
+  Resolver.url("typesafe", url("http://repo.typesafe.com/typesafe/ivy-releases/"))(Resolver.ivyStylePatterns)
 )
 
 initialCommands in console :=
 """
 import java.net._
-import geotrellis.raster._
+import geotrellis.layer._
 import geotrellis.vector._
-import geotrellis.vector.io._
+import geotrellis.raster._
+import geotrellis.raster.gdal._
 import geotrellis.spark._
-import geotrellis.spark.tiling._
-import geotrellis.contrib.vlm._
-import geotrellis.contrib.vlm.geotiff._
-import geotrellis.contrib.vlm.gdal._
-import geotrellis.contrib.vlm.avro._
 """.stripMargin
 
 // Fork JVM for test context to avoid memory leaks in Metaspace
@@ -63,7 +55,7 @@ assemblyMergeStrategy in assembly := {
 // Settings from sbt-lighter plugin that will automate creating and submitting this job to EMR
 import sbtlighter._
 
-sparkEmrRelease := "emr-5.23.0"
+sparkEmrRelease := "emr-5.29.0"
 sparkAwsRegion := "$aws_region$"
 sparkClusterName := "$name$"
 sparkEmrApplications := Seq("Spark", "Zeppelin", "Ganglia")
