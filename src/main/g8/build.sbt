@@ -5,17 +5,13 @@ version := "0.1.0"
 scalaVersion := "$scala_version$"
 
 libraryDependencies ++= Seq(
-  "com.monovore" %% "decline" % "0.6.2",
+  "com.monovore" %% "decline" % "1.2.0",
   "org.locationtech.geotrellis" %% "geotrellis-spark" % "$geotrellis_version$",
   "org.locationtech.geotrellis" %% "geotrellis-s3" % "$geotrellis_version$",
   "org.locationtech.geotrellis" %% "geotrellis-gdal" % "$geotrellis_version$",
   "org.apache.spark" %% "spark-core" % "$spark_version$" % Provided,
   "org.apache.spark" %% "spark-sql" % "$spark_version$" % Provided,
   "org.apache.spark" %% "spark-hive" % "$spark_version$" % Provided
-)
-
-resolvers ++= Seq(
-  Resolver.url("typesafe", url("http://repo.typesafe.com/typesafe/ivy-releases/"))(Resolver.ivyStylePatterns)
 )
 
 initialCommands in console :=
