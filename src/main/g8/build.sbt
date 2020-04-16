@@ -51,7 +51,7 @@ assemblyMergeStrategy in assembly := {
 // Settings from sbt-lighter plugin that will automate creating and submitting this job to EMR
 import sbtlighter._
 
-sparkEmrRelease := "emr-5.29.0"
+sparkEmrRelease := "$emr_version$"
 sparkAwsRegion := "$aws_region$"
 sparkClusterName := "$name$"
 sparkEmrApplications := Seq("Spark", "Zeppelin", "Ganglia")
