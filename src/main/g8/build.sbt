@@ -67,12 +67,6 @@ sparkCoreType := "m4.xlarge"
 sparkInstanceCount := 5
 sparkMasterPrice := Some(0.5)
 sparkCorePrice := Some(0.5)
-sparkEmrBootstrap := List(
-  BootstrapAction("Install GDAL + dependencies",
-                  "s3://geotrellis-test/usbuildings/bootstrap.sh",
-                  "s3://geotrellis-test/usbuildings",
-                  "v1.0")
-)
 sparkEmrServiceRole := "EMR_DefaultRole"
 sparkInstanceRole := "EMR_EC2_DefaultRole"
 sparkMasterEbsSize := Some(64)
