@@ -3,3 +3,7 @@ boot/
 lib_managed/
 src_managed/
 project/plugins/project/
+.bloop
+.metals
+metals.sbt
+.history
