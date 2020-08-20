@@ -67,6 +67,13 @@ sparkEmrServiceRole := "EMR_DefaultRole"
 sparkInstanceRole := "EMR_EC2_DefaultRole"
 sparkMasterEbsSize := Some(64)
 sparkCoreEbsSize := Some(64)
+sparkEmrBootstrap := List(
+  BootstrapAction(
+    "Install GDAL dependencies",
+    "s3://geotrellis-test/emr-gdal/bootstrap.sh",
+    "3.1.2"
+  )
+)
 sparkEmrConfigs := List(
   EmrConfig("spark").withProperties(
     "maximizeResourceAllocation" -> "true"
@@ -75,12 +82,13 @@ sparkEmrConfigs := List(
     "spark.driver.maxResultSize" -> "3G",
     "spark.dynamicAllocation.enabled" -> "true",
     "spark.shuffle.service.enabled" -> "true",
+    "spark.shuffle.compress" -> "true",
+    "spark.shuffle.spill.compress" -> "true",
     "spark.rdd.compress" -> "true",
-    "spark.driver.extraJavaOptions" -> "-Djava.library.path=/usr/local/lib",
-    "spark.executor.extraJavaOptions" -> "-XX:+UseParallelGC"
-  ),
-  EmrConfig("spark-env").withProperties(
-    "LD_LIBRARY_PATH" -> "/usr/local/lib"
+    "spark.driver.extraJavaOptions" ->"-XX:+UseParallelGC -XX:+UseParallelOldGC -XX:OnOutOfMemoryError='kill -9 %p'",
+    "spark.executor.extraJavaOptions" -> "-XX:+UseParallelGC -XX:+UseParallelOldGC -XX:OnOutOfMemoryError='kill -9 %p'",
+    "spark.yarn.appMasterEnv.LD_LIBRARY_PATH" -> "/usr/local/miniconda/lib/:/usr/local/lib",
+    "spark.executorEnv.LD_LIBRARY_PATH" -> "/usr/local/miniconda/lib/:/usr/local/lib"
   ),
   EmrConfig("yarn-site").withProperties(
     "yarn.resourcemanager.am.max-attempts" -> "1",
