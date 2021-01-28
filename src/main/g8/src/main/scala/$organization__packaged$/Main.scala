@@ -18,9 +18,12 @@ import org.log4s._
 object  Main {
   @transient private[this] lazy val logger = getLogger
 
-  private val inputsOpt = Opts.options[String]("inputPath", help = "The path that points to data that will be read")
-  private val outputOpt = Opts.option[String]("outputPath", help = "The path of the output tiffs")
-  private val partitionsOpt =  Opts.option[Int]("numPartitions", help = "The number of partitions to use").orNone
+  private val inputsOpt = Opts.options[String](
+    "inputs", help = "The path that points to data that will be read")
+  private val outputOpt = Opts.option[String](
+    "output", help = "The path of the output tiffs")
+  private val partitionsOpt =  Opts.option[Int](
+    "numPartitions", help = "The number of partitions to use").orNone
 
   private val command = Command(name = "$name$", header = "GeoTrellis App: $name$") {
     (inputsOpt, outputOpt, partitionsOpt).tupled
@@ -33,17 +36,15 @@ object  Main {
         sys.exit(1)
 
       case Right((i, o, p)) =>
-        run(i.toList, o, p)
+        try {
+          run(i.toList, o, p)(Spark.context)
+        } finally {
+          Spark.session.stop()
+        }
     }
   }
 
-  def run(inputs: List[String], output: String, numPartitions: Option[Int]): Unit = {
-    implicit val sc = Spark.session.sparkContext
-
-    try {
-      // Job logic
-    } finally {
-      Spark.session.stop()
-    }
+  def run(inputs: List[String], output: String, numPartitions: Option[Int])(implicit sc: SparkContext): Unit = {
+    // Job Logic
   }
 }
