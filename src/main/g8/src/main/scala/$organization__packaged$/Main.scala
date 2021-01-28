@@ -33,11 +33,11 @@ object  Main {
         sys.exit(1)
 
       case Right((i, o, p)) =>
-        run(i, o, p)
+        run(i.toList, o, p)
     }
   }
 
-  def run(inputs: Seq[String], output: String, numPartitions: Option[Int]): Unit = {
+  def run(inputs: List[String], output: String, numPartitions: Option[Int]): Unit = {
     implicit val sc = Spark.session.sparkContext
 
     try {
