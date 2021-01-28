@@ -1,4 +1,4 @@
-package $organization__packaged$
+package $organization$
 
 import geotrellis.layer._
 import geotrellis.vector._
