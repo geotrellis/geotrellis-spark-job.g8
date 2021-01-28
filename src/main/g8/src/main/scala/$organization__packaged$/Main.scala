@@ -1,4 +1,4 @@
-package geotrellis.batch
+package $organization__packaged$
 
 import geotrellis.layer._
 import geotrellis.vector._
