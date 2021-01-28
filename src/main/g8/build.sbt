@@ -22,6 +22,7 @@ import geotrellis.vector._
 import geotrellis.raster._
 import geotrellis.raster.gdal._
 import geotrellis.spark._
+import $organization$._
 """.stripMargin
 
 // Fork JVM for test context to avoid memory leaks in Metaspace
@@ -60,7 +61,7 @@ sparkS3JarFolder := "$emr_job_uri$/jars"
 sparkS3LogUri := Some("$emr_job_uri$/logs")
 sparkMasterType := "m4.xlarge"
 sparkCoreType := "m4.xlarge"
-sparkInstanceCount := 5
+sparkInstanceCount := $emr_instance_count$
 sparkMasterPrice := Some(0.5)
 sparkCorePrice := Some(0.5)
 sparkEmrServiceRole := "EMR_DefaultRole"
@@ -69,8 +70,8 @@ sparkMasterEbsSize := Some(64)
 sparkCoreEbsSize := Some(64)
 sparkEmrBootstrap := List(
   BootstrapAction(
-    "Install GDAL dependencies",
-    "s3://geotrellis-test/emr-gdal/bootstrap.sh",
+    "Install GDAL",
+    "s3://geotrellis-demo/emr/bootstrap/conda-gdal.sh",
     "3.1.2"
   )
 )
