@@ -22,6 +22,7 @@ import geotrellis.vector._
 import geotrellis.raster._
 import geotrellis.raster.gdal._
 import geotrellis.spark._
+import $organization$._
 """.stripMargin
 
 // Fork JVM for test context to avoid memory leaks in Metaspace
