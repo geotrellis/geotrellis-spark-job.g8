@@ -69,8 +69,8 @@ sparkMasterEbsSize := Some(64)
 sparkCoreEbsSize := Some(64)
 sparkEmrBootstrap := List(
   BootstrapAction(
-    "Install GDAL dependencies",
-    "s3://geotrellis-test/emr-gdal/bootstrap.sh",
+    "Install GDAL",
+    "s3://geotrellis-demo/emr/bootstrap/conda-gdal.sh",
     "3.1.2"
   )
 )
