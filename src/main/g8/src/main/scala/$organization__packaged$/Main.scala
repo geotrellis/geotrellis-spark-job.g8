@@ -15,24 +15,35 @@ import org.apache.spark.rdd._
 
 import org.log4s._
 
-object Main extends CommandApp(
-  name = "$name$",
-  header = "GeoTrellis Spark: $name$",
-  main = {
-    @transient val logger = getLogger
+object  Main {
+  @transient private[this] lazy val logger = getLogger
 
-    val inputsOpt = Opts.options[String]("inputPath", help = "The path that points to data that will be read")
-    val outputOpt = Opts.option[String]("outputPath", help = "The path of the output catlaog")
-    val numPartitionsOpt = Opts.option[Int]("numPartitions", help = "The number of partitions to use").orNone
+  private val inputsOpt = Opts.options[String]("inputPath", help = "The path that points to data that will be read")
+  private val outputOpt = Opts.option[String]("outputPath", help = "The path of the output tiffs")
+  private val partitionsOpt =  Opts.option[Int]("numPartitions", help = "The number of partitions to use").orNone
 
-    (inputsOpt, outputOpt, numPartitionsOpt).mapN { (inputs, output, numPartitions) =>
-      implicit val sc = Spark.session.sparkContext
+  private val command = Command(name = "$name$", header = "GeoTrellis App: $name$") {
+    (inputsOpt, outputOpt, partitionsOpt).tupled
+  }
 
-      try {
-        // Job logic ...
-      } finally {
-        Spark.session.stop()
-      }
+  def main(args: Array[String]): Unit = {
+    command.parse(args, sys.env) match {
+      case Left(help) =>
+        System.err.println(help)
+        sys.exit(1)
+
+      case Right((i, o, p)) =>
+        run(i, o, p)
     }
   }
-)
+
+  def run(inputs: Seq[String], output: String, numPartitions: Option[Int]): Unit = {
+    implicit val sc = Spark.session.sparkContext
+
+    try {
+      // Job logic
+    } finally {
+      Spark.session.stop()
+    }
+  }
+}
