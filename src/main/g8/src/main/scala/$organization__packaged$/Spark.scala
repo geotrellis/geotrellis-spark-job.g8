@@ -14,4 +14,5 @@ object Spark {
     .set("spark.executionEnv.AWS_PROFILE", Properties.envOrElse("AWS_PROFILE", "default"))
 
   implicit val session: SparkSession = SparkSession.builder.config(conf).enableHiveSupport.getOrCreate
+  implicit def context: SparkContext = session.sparkContext
 }
